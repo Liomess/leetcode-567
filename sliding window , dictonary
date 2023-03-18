@@ -1,0 +1,28 @@
+class Solution:
+    def checkInclusion(self, s1: str, s2: str) -> bool:
+        fmap={}
+        lp=len(s1)
+        for i in s1:
+            if i not in fmap:
+                fmap[i]=1
+            else:
+                fmap[i]+=1
+        copymap=fmap.copy()
+        n=len(s2)
+        ws,we=0,0
+        while we<n:
+            if s2[we] in fmap:
+                if fmap[s2[we]]>0:
+                    fmap[s2[we]]-=1
+                    we+=1
+                    if we-ws==lp:
+                        return True
+                else:
+                    fmap=copymap.copy()
+                    we=ws+1
+                    ws+=1
+            else:
+                fmap=copymap.copy()
+                we=ws+1
+                ws+=1
+        return False
